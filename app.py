@@ -10,6 +10,8 @@ app = Flask(
 )
 
 socketio = SocketIO(app, binary=True)
+socketio.init_app(app, cors_allowed_origins="*")
+
 
 @app.route('/')
 def home():
