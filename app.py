@@ -20,8 +20,10 @@ def home():
 
 @socketio.on('audio_chunk')
 def handle_audio_chunk(chunk):
-    print(request)
-    print('Received Chunk of size:', len(chunk))
+    # print(request)
+    # print('Received Chunk of size:', len(chunk))
+    app.logger.warning("Recieved audio\n")
+    app.logger.warning("lenght of chunk is %d\n", len(chunk))
     print(chunk)
 
 if __name__ == '__main__':
