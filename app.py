@@ -16,6 +16,11 @@ socketio.init_app(app, cors_allowed_origins="*")
 @app.route('/')
 def home():
     app.logger.warning('test message 1\ntest message 2\ntest message 3')
+    app.logger.debug('this is a DEBUG message')
+    app.logger.info('this is an INFO message')
+    app.logger.warning('this is a WARNING message')
+    app.logger.error('this is an ERROR message')
+    app.logger.critical('this is a CRITICAL message'
 
     app.logger.debug('this is a DEBUG message')
     return render_template('index.html')
