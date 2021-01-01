@@ -14,6 +14,10 @@ socketio = SocketIO(app, binary=True)
 def home():
     return render_template('index.html')
 
+@app.route('/video')
+def video():
+    return render_template('video.html')
+
 @socketio.on('audio_chunk')
 def handle_audio_chunk(chunk):
     # print(request)
