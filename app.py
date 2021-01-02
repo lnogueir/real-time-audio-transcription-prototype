@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(
@@ -14,11 +14,15 @@ socketio = SocketIO(app, binary=True)
 def home():
     return render_template('index.html')
 
+@socketio.on('begin_transcription')
+def handle_begin_transcription():
+    print('Began')
+    return
+
 @socketio.on('audio_chunk')
 def handle_audio_chunk(chunk):
-    # print(request)
-    # print('Received Chunk of size:', len(chunk))
-    print(chunk)
+    '''Here put the chunk on the user's session queue'''
+    pass
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
