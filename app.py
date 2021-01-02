@@ -12,6 +12,11 @@ app = Flask(
 )
 
 socketio = SocketIO(app, binary=True)
+haar_cascade=cv2.CascadeClassifier('HS.xml')
+
+def bb_hw(bb):
+    xmin, ymin, xmax, ymax = bb
+    return np.array([xmin, ymin, xmax - xmin + 1, ymax - ymin + 1])
 
 @app.route('/')
 def home():
@@ -26,7 +31,7 @@ def emotion_handler():
     try:
         content = request.get_json(force=True)
     except HTTPException as e:
-        return jsonify({'error': 'Request data invalid'}), 400
+        return jsonify({'status':0 ,'error': 'Request data invalid'}), 400
     
     
     encoded_image = str(content)
@@ -36,10 +41,16 @@ def emotion_handler():
     np_array = np.frombuffer(image_data, np.uint8)
     image = cv2.imdecode(np_array, cv2.IMREAD_UNCHANGED)
 
-    cv2.imshow('image', image)
-    cv2.waitKey(0)
+    faces_rect = haar_cascade.detectMultiScale(image, scaleFactor=1.1, minNeighbors = 3)
+    rect_list = []
 
-    return jsonify({'status':0} )    
+    for (x,y,w,h) in faces_rect:
+        cv2.rectangle(image, (x,y), (x+w,y+h),(0,255,0),2)
+        rect_list = [x,y,x+w,y+h]
+        print(rect_list)
+
+    rect_np = bb_hw(rect_list)
+    return jsonify({'status':1, 'rect': list([int(i) for i in rect_np])} )    
 
 @socketio.on('audio_chunk')
 def handle_audio_chunk(chunk):

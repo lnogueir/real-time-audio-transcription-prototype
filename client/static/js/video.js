@@ -31,14 +31,19 @@ $('#video-button').click(function() {
   });
 
 function sendFrame(imageUrl){
-    fetch(API_URL,{
+    return fetch(API_URL,{
         method: 'POST',
         body: JSON.stringify(imageUrl),
         headers: {
             'content-type': 'application/json'
         }
         }).then(resp => resp.json()
-            .then(data => console.log(data)))
+            .then(data => {
+                if(data['status']){
+                    // console.log(data['rect'])
+                    return(data['rect'])
+                } 
+            }))
 }
 
 
@@ -52,6 +57,8 @@ function capture() {
     
     imageCapture = canvas.toDataURL("image/jpeg");
 
-    image.src = imageCapture;
-    sendFrame(imageCapture);
+    sendFrame(imageCapture).then(data => {
+        canvas.getContext('2d').rect(data[0],data[1],data[2],data[3]);
+        canvas.getContext('2d').stroke();
+    })
 }
