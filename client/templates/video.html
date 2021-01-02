@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Video</title>
+    <link rel="stylesheet" type="text/css" href="/css/video.css">
 </head>
 <body>
-
-    <p>Hello World</p>
-    <video autoplay></video>
+    <div class="center">
+        <div class='webcam' id="video-container">
+            <video autoplay width="640" height="480"></video>
+            <canvas width="640" height="480"></canvas>
+        </div>
+        <div class='button'>
+            <button id="video-button">Turn camera <b>ON</b></button>
+            <button onclick="capture()">Capture</button>
+        </div>
+    </div>
 
     <script src="/js/video.js"></script>
 </body>
