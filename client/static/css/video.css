@@ -1,0 +1,15 @@
+.center{
+    display:flex;
+    flex-direction: column;
+    margin:0 auto;
+}
+
+.webcam{
+    flex-grow: 1;
+    margin:0 auto;
+}
+
+.button{
+    flex-grow: 1;
+    margin:0 auto;
+}
