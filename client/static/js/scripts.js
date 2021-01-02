@@ -10,8 +10,10 @@ navigator.mediaDevices.getUserMedia({ audio: true })
   $('#speaker-button').click(function() {
     var btag = $(this).find('b')
     if (btag.html() == 'ON') {
-      mediaRecorder.start(timeslice)
-      btag.html('OFF');
+      socket.emit('begin_transcription', () => {
+        mediaRecorder.start(timeslice)
+        btag.html('OFF');
+      });
     } else {
       mediaRecorder.stop();
       btag.html('ON');
@@ -21,5 +23,4 @@ navigator.mediaDevices.getUserMedia({ audio: true })
   mediaRecorder.ondataavailable = function(e) {
     socket.emit('audio_chunk', e.data);
   }
-
 });

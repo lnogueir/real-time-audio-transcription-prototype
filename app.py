@@ -34,11 +34,21 @@ def bb_hw(bb):
 def home():
     return render_template('index.html')
 
+@socketio.on('begin_transcription')
+def handle_begin_transcription():
+    print('Began')
+    return
+
+@socketio.on('audio_chunk')
+def handle_audio_chunk(chunk):
+    '''Here put the chunk on the user's session queue'''
+    pass
+
 @app.route('/video')
 def video():
     return render_template('video.html')
 
-@app.route('/api/emotion_handler',methods=['POST'])
+@app.route('/api/emotion_handler', methods=['POST'])
 def emotion_handler():
     try:
         content = request.get_json(force=True)
@@ -82,12 +92,6 @@ def emotion_handler():
 
     # rect_np = bb_hw(rect_list)
     return jsonify({'status':1} )    
-
-@socketio.on('audio_chunk')
-def handle_audio_chunk(chunk):
-    # print(request)
-    # print('Received Chunk of size:', len(chunk))
-    print(chunk)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
