@@ -16,8 +16,8 @@ from sockets import audio_chunk
 from controllers.routes import routes
 server.register_blueprint(routes)
 
-# from controllers.api import api
-# server.register_blueprint(api)
+from controllers.api import api
+server.register_blueprint(api)
 
 if __name__ == '__main__':
     socketio.run(server, debug=True)
