@@ -40,11 +40,11 @@ def bb_hw(bb):
 
 @app.route('/')
 def home():
-    app.logger.warning('test message 1\ntest message 2\ntest message 3')
-    queryObject  = { "roomID": "testing123"}
-    results = mongo.db.Rooms.find(queryObject)
-    for result in results:
-        print(result["roomID"])
+    # app.logger.warning('test message 1\ntest message 2\ntest message 3')
+    # queryObject  = { "roomID": "testing123"}
+    # results = mongo.db.Rooms.find(queryObject)
+    # for result in results:
+    #     print(result["roomID"])
     return render_template('index.html')
 
 @socketio.on('begin_transcription')
