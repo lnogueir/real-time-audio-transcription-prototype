@@ -3,7 +3,6 @@ from flask_session import Session
 from flask_socketio import SocketIO
 from flask_pymongo import PyMongo
 import os
-import pymongo
 
 
 
