@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+transcription_key.json
+audioset/vggish_model.ckpt

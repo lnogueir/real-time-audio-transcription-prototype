@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_socketio import SocketIO
+import os
 
 server = Flask(
     __name__, 
@@ -10,14 +11,16 @@ server = Flask(
 
 socketio = SocketIO(server, binary=True)
 
-from sockets import begin_transcription
-from sockets import audio_chunk
-
-from controllers.routes import routes
-server.register_blueprint(routes)
-
-# from controllers.api import api
-# server.register_blueprint(api)
 
 if __name__ == '__main__':
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="transcription_key.json"
+    server.secret_key = 'super secret key'
+    server.config['SESSION_TYPE'] = 'filesystem'
+
+    from sockets import transcription_events
+    from controllers.api import api
+    from controllers.routes import routes
+    server.register_blueprint(api)
+    server.register_blueprint(routes)
+
     socketio.run(server, debug=True)
